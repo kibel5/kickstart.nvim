@@ -841,6 +841,7 @@ require('lazy').setup({
     config = function()
       require('catppuccin').setup {
         flavour = 'mocha', -- latte, frappe, macchiato, mocha
+        transparent_background = true,
       }
     end,
     init = function()
@@ -949,6 +950,7 @@ require('lazy').setup({
       { '<c-\\>', '<cmd><C-U>TmuxNavigatePrevious<cr>' },
     },
   },
+  { 'tpope/vim-fugitive', lazy = false },
   -- The following comments only work if you have downloaded the kickstart repo, not just copy pasted the
   -- init.lua. If you want these files, they are in the repository, so you can just download them and
   -- place them in the correct locations.
