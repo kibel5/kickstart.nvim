@@ -204,6 +204,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 })
 
 vim.keymap.set('n', '<leader>jk', ':w<CR>', { desc = 'save the file' })
+vim.keymap.set('n', '<leader>n', ':bn<CR>', { desc = 'next buffer' })
 
 -- [[ Install `lazy.nvim` plugin manager ]]
 --    See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
@@ -842,19 +843,31 @@ require('lazy').setup({
     end,
   },
 
+  -- {
+  --   'catppuccin/nvim',
+  --   name = 'catppuccin',
+  --   priority = 1000,
+  --   lazy = false,
+  --   config = function()
+  --     require('catppuccin').setup {
+  --       flavour = 'mocha', -- latte, frappe, macchiato, mocha
+  --       transparent_background = true,
+  --     }
+  --   end,
+  --   init = function()
+  --     vim.cmd.colorscheme 'catppuccin'
+  --   end,
+  -- },
+
   {
-    'catppuccin/nvim',
-    name = 'catppuccin',
-    priority = 1000,
+    'folke/tokyonight.nvim',
     lazy = false,
-    config = function()
-      require('catppuccin').setup {
-        flavour = 'mocha', -- latte, frappe, macchiato, mocha
-        transparent_background = true,
-      }
-    end,
+    priority = 1000,
+    opts = {
+      transparent = true,
+    },
     init = function()
-      vim.cmd.colorscheme 'catppuccin'
+      vim.cmd.colorscheme 'tokyonight-storm'
     end,
   },
 
@@ -970,11 +983,11 @@ require('lazy').setup({
   --  Uncomment any of the lines below to enable them (you will need to restart nvim).
   --
   -- require 'kickstart.plugins.debug',
-  -- require 'kickstart.plugins.indent_line',
-  -- require 'kickstart.plugins.lint',
-  -- require 'kickstart.plugins.autopairs',
-  -- require 'kickstart.plugins.neo-tree',
-  -- require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
+  require 'kickstart.plugins.indent_line',
+  require 'kickstart.plugins.lint',
+  require 'kickstart.plugins.autopairs',
+  require 'kickstart.plugins.neo-tree',
+  require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
 
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --    This is the easiest way to modularize your config.
