@@ -154,7 +154,7 @@ vim.opt.inccommand = 'split'
 vim.opt.cursorline = true
 
 -- Minimal number of screen lines to keep above and below the cursor.
-vim.opt.scrolloff = 10
+vim.opt.scrolloff = 15
 
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
@@ -952,7 +952,17 @@ require('lazy').setup({
     --    - Show your current context: https://github.com/nvim-treesitter/nvim-treesitter-context
     --    - Treesitter + textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
   },
-  { 'github/copilot.vim', lazy = false },
+  {
+    'github/copilot.vim',
+    lazy = false,
+    config = function()
+      vim.g.copilot_no_tab_map = true
+      vim.g.copilot_assume_mapped = true
+      vim.keymap.set('i', '<C-q>', function()
+        vim.fn.feedkeys(vim.fn['copilot#Accept'](), '')
+      end, { desc = 'Copilot Accept', noremap = true, silent = true })
+    end,
+  },
   {
     'christoomey/vim-tmux-navigator',
     cmd = {
