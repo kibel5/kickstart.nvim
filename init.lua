@@ -206,6 +206,20 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
+vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWinEnter', 'TermOpen' }, {
+  desc = 'Disable line numbers and spell checking in terminal buffers',
+  group = vim.api.nvim_create_augroup('term-open-event', { clear = true }),
+  callback = function(ev)
+    local name = vim.api.nvim_buf_get_name(ev.buf)
+    vim.opt.spell = true
+    vim.opt.number = true
+    if name:find 'term://' or ev.event == 'TermOpen' then
+      vim.opt.spell = false
+      vim.opt.number = false
+    end
+  end,
+})
+
 vim.keymap.set('n', '<leader>jk', ':w<CR>', { desc = 'save the file' })
 vim.keymap.set('n', '<leader>n', ':bn<CR>', { desc = 'next buffer' })
 
@@ -623,7 +637,7 @@ require('lazy').setup({
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
         -- clangd = {},
-        -- gopls = {},
+        gopls = {},
         -- pyright = {},
         -- rust_analyzer = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
