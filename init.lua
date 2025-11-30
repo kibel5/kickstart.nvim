@@ -742,6 +742,8 @@ require('lazy').setup({
             -- certain features of an LSP (for example, turning off formatting for ts_ls)
             server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
             require('lspconfig')[server_name].setup(server)
+            vim.lsp.config(server_name, server)
+            vim.lsp.enable(server_name)
           end,
         },
       }
@@ -881,7 +883,7 @@ require('lazy').setup({
       -- the rust implementation via `'prefer_rust_with_warning'`
       --
       -- See :h blink-cmp-config-fuzzy for more information
-      fuzzy = { implementation = 'lua' },
+      fuzzy = { implementation = 'prefer_rust_with_warning' },
 
       -- Shows a signature help window while you type arguments for a function
       signature = { enabled = true },
