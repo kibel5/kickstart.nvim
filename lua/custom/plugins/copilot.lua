@@ -15,7 +15,7 @@ return {
       vim.fn.feedkeys(vim.fn['copilot#Accept'](), '')
     end, { desc = 'Copilot Accept', noremap = true, silent = true })
 
-    vim.keymap.set('i', '<C-w>', function()
+    vim.keymap.set('i', '<C-e>', function()
       vim.fn.feedkeys(SuggestOneWord(), '')
     end, { desc = 'Copilot Accept One Word', noremap = true, silent = true })
   end,
