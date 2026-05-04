@@ -224,11 +224,11 @@ vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWinEnter', 'TermOpen' }, {
   group = vim.api.nvim_create_augroup('term-open-event', { clear = true }),
   callback = function(ev)
     local name = vim.api.nvim_buf_get_name(ev.buf)
-    vim.o.spell = true
-    vim.o.number = true
+    vim.wo.spell = true
+    vim.wo.number = true
     if name:find 'term://' or ev.event == 'TermOpen' then
-      vim.o.spell = false
-      vim.o.number = false
+      vim.wo.spell = false
+      vim.wo.number = false
     end
   end,
 })
@@ -1004,7 +1004,6 @@ require('lazy').setup({
   require 'kickstart.plugins.neo-tree',
   require 'kickstart.plugins.gitsigns',
   require 'kickstart.plugins.dadbod',
-  require 'kickstart.plugins.neo-tree',
 
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --    This is the easiest way to modularize your config.
