@@ -155,7 +155,7 @@ do
   --  It is very similar to `vim.o` but offers an interface for conveniently interacting with tables.
   --   See `:help lua-options`
   --   and `:help lua-guide-options`
-  vim.o.list = true
+  vim.o.list = false
   vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
 
   -- Preview substitutions live, as you type!
@@ -171,6 +171,9 @@ do
   -- instead raise a dialog asking if you wish to save the current file(s)
   -- See `:help 'confirm'`
   vim.o.confirm = true
+
+  vim.o.spelllang = 'en_us'
+  vim.o.spell = true
 end
 
 -- ============================================================
@@ -250,6 +253,20 @@ do
     desc = 'Highlight when yanking (copying) text',
     group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
     callback = function() vim.hl.on_yank() end,
+  })
+
+  vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWinEnter', 'TermOpen' }, {
+    desc = 'Disable line numbers and spell checking in terminal buffers',
+    group = vim.api.nvim_create_augroup('term-open-event', { clear = true }),
+    callback = function(ev)
+      local name = vim.api.nvim_buf_get_name(ev.buf)
+      vim.wo.spell = true
+      vim.wo.number = true
+      if name:find 'term://' or ev.event == 'TermOpen' then
+        vim.wo.spell = false
+        vim.wo.number = false
+      end
+    end,
   })
 end
 
@@ -935,11 +952,10 @@ do
     -- Blink.cmp includes an optional, recommended rust fuzzy matcher,
     -- which automatically downloads a prebuilt binary when enabled.
     --
-    -- By default, we use the Lua implementation instead, but you may enable
-    -- the rust implementation via `'prefer_rust_with_warning'`
+    -- Prefer the faster Rust implementation and fall back to Lua when unavailable.
     --
     -- See `:help blink-cmp-config-fuzzy` for more information
-    fuzzy = { implementation = 'lua' },
+    fuzzy = { implementation = 'prefer_rust' },
 
     -- Shows a signature help window while you type arguments for a function
     signature = { enabled = true },
